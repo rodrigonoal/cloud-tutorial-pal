@@ -2,16 +2,16 @@ const knex = require("../connection");
 const emailValidation = require("../validations/email");
 
 const postEmail = async (req, res) => {
-  const email = req.body;
+  const { email } = req.body;
 
-  const invalid = emailValidation(email);
+  const valid = emailValidation(email);
 
-  if (invalid) {
+  if (!valid) {
     return res.status(400).json("Invalid user email.");
   }
 
   try {
-    const posted = await knex("users").insert(email).returning("*");
+    const posted = await knex("users").insert({ email }).returning("*");
 
     if (posted) {
       return res.status(200).json("User email registered.");
@@ -59,9 +59,9 @@ const patchEmail = async (req, res) => {
   const { id } = req.params;
   const { email } = req.body;
 
-  const invalid = emailValidation(email);
+  const valid = emailValidation(email);
 
-  if (invalid) {
+  if (!valid) {
     return res.status(400).json("Invalid user email.");
   }
 

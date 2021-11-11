@@ -4,9 +4,9 @@ const emailValidation = require("../validations/email");
 const postEmail = async (req, res) => {
   const email = req.body;
 
-  const valid = emailValidation(email);
+  const invalid = emailValidation(email);
 
-  if (!valid) {
+  if (invalid) {
     return res.status(400).json("Invalid user email.");
   }
 
@@ -59,9 +59,9 @@ const patchEmail = async (req, res) => {
   const { id } = req.params;
   const { email } = req.body;
 
-  const valid = emailValidation(email);
+  const invalid = emailValidation(email);
 
-  if (!valid) {
+  if (invalid) {
     return res.status(400).json("Invalid user email.");
   }
 
